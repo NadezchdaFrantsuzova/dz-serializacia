@@ -10,10 +10,10 @@ public class Main {
                 "Крупа гречневая", "Кефир", "Яйца", "Квас"};
         int[] prices = {100, 120, 60, 120, 90, 80, 90, 160};
         Basket basket = new Basket(product, prices);
-        File textFile = new File("basket.txt");
+        File textFile = new File("basket.bin");
 
         if (textFile.exists()) {
-            basket = Basket.loadFromTxtFile(textFile);
+            basket = Basket.loadFromBinFile(textFile);
             System.out.println("Существует покупательская корзина:");
             basket.printCart();
         } else {
@@ -39,6 +39,6 @@ public class Main {
             }
         }
         basket.printCart();
-        basket.saveTxt(textFile);
+        basket.saveBin(textFile);
     }
 }
