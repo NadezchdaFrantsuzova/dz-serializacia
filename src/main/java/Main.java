@@ -10,10 +10,14 @@ public class Main {
                 "Крупа гречневая", "Кефир", "Яйца", "Квас"};
         int[] prices = {100, 120, 60, 120, 90, 80, 90, 160};
         Basket basket = new Basket(product, prices);
-        File textFile = new File("basket.txt");
 
-        if (textFile.exists()) {
-            basket = Basket.loadFromTxtFile(textFile);
+        File textFile = new File("basket.txt");
+        ClientLog clientLog = new ClientLog();
+        File txtFile = new File("log.scv");
+        File jsonFile = new File("basket.json");
+
+        if (jsonFile.exists()) {
+            basket = Basket.loadJson(jsonFile);
             System.out.println("Существует покупательская корзина:");
             basket.printCart();
         } else {
@@ -35,10 +39,15 @@ public class Main {
                 String[] parts = input.split(" ");
                 productNum = Integer.parseInt(parts[0]) - 1;
                 amount = Integer.parseInt(parts[1]);
+
+                clientLog.log(productNum, amount);
                 basket.addToCart(productNum, amount);
             }
         }
         basket.printCart();
-        basket.saveTxt(textFile);
+        basket.saveJson(jsonFile);
+        //basket.saveTxt(textFile);
+
+        clientLog.exportAsCSV(txtFile);
     }
 }

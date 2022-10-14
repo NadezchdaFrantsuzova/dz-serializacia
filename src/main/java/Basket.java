@@ -1,4 +1,7 @@
+import com.google.gson.Gson;
+
 import java.io.*;
+import java.util.Scanner;
 
 public class Basket {
     protected int[] basket;
@@ -64,5 +67,22 @@ public class Basket {
             System.out.println(e.getMessage());
         }
         return null;
+    }
+
+    //JSON-файл:
+    public void saveJson(File jsonFile) throws IOException {
+        try (PrintWriter out = new PrintWriter(new FileWriter(jsonFile))) {
+            Gson gson = new Gson();
+            String json = gson.toJson(this);
+            out.println(json);
+        }
+    }
+
+    public static Basket loadJson(File jsonFile) throws IOException {
+        try (Scanner scanner = new Scanner(jsonFile)) {
+            String json = scanner.nextLine();
+            Gson gson = new Gson();
+            return gson.fromJson(json, Basket.class);
+        }
     }
 }
