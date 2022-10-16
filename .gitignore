@@ -3,3 +3,7 @@
 out/
 target/
 basket.txt
+*.txt
+*.csv
+*.json
+basket.json
